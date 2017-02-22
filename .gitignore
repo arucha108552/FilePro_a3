@@ -1,0 +1,16 @@
+box/a.out
+box/cmake-build-debug
+box/CMakeLists.txt
+box/Makefile
+btree/a.out
+btree/cmake-build-debug
+btree/CMakeLists.txt
+btree/Makefile
+mergesort/a.out
+mergesort/cmake-build-debug
+mergesort/CMakeLists.txt
+mergesort/Makefile
+quene/a.out
+quene/cmake-build-debug
+quene/CMakeLists.txt
+quene/Makefile
