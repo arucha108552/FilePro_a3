@@ -7,19 +7,17 @@
 
 void createBox(Box **b, int init_cap) {
     // IMPLEMENT
-    Box *d = NULL;
-    d = (Box *) malloc(sizeof(Box));
-    (*b) = d;
-    d->data = malloc(sizeof(init_cap));
-    d->cap = init_cap;
-    d->size = 0;
+    (*b) = malloc(sizeof(Box));
+    (*b)->data = (int *) malloc(sizeof(Box) * init_cap);
+    (*b)->cap = init_cap;
+    (*b)->size = 0;
 }
 
 void insert(Box *b, int elem) {
     // IMPLEMENT
     if(b->cap == b->size){
-        b->data = realloc(b->data, sizeof(int)*(b->cap+1));
-        b->cap += 1;
+        b->cap *= 2;
+        b->data = realloc(b->data, sizeof(int)*(b->cap));
         b->data[b->size] = elem;
         b->size += 1;
     }else{
@@ -30,15 +28,21 @@ void insert(Box *b, int elem) {
 
 void removeAll(Box *b, int elem) {
     // IMPLEMENT
-    for(int i = 0; i <= b->cap;i++){
-        b->data[i] = 0;
+    for(int i = 0; i < b->size;i++){
+        if(b->data[i] == elem){
+            for(int j = i;j < b->size-1;j++){
+                b->data[j] = b->data[j+1];
+            }
+            b->size -= 1;
+            i = 0;
+        }
     }
 
 }
 
 void printBox(Box *b) {
     // IMPLEMENT
-    for(int i = 0; i <= b->cap; i++){
+    for(int i = 0; i < b->size; i++){
         printf("%d\n",b->data[i]);
     }
 }
@@ -46,17 +50,15 @@ void printBox(Box *b) {
 double getMean(Box *b) {
     // IMPLEMENT
     int sum = 0;
-    for(int i = 0; i <= b->size; i++){
+    for(int i = 0; i < b->size; i++){
         sum += b->data[i];
     }
     return sum/b->size;
 }
 
 void dealloc(Box **b) {
-    Box *j = NULL;
-    (*b) = j;
-    free(j->data);
-    free(b);
+    free((*b)->data);
+    free((*b));
 }
 
 /*
@@ -128,6 +130,6 @@ int main(int argc, char **argv)
     printBox(b2);
     printf("--\n");
 
-//    dealloc(&b1);
-//    dealloc(&b2);
+    dealloc(&b1);
+    dealloc(&b2);
 }
